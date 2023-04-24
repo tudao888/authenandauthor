@@ -2,10 +2,12 @@ package com.authenandauthor.controller;
 
 import com.authenandauthor.model.Account;
 import com.authenandauthor.model.AccountToken;
+import com.authenandauthor.model.Product;
 import com.authenandauthor.model.Role;
 import com.authenandauthor.repository.AccountRepo;
 import com.authenandauthor.service.AccountService;
 import com.authenandauthor.service.JwtService;
+import com.authenandauthor.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ import java.util.List;
 public class AccountController {
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    ProductService productService;
 
     @Autowired
     JwtService jwtService;
@@ -57,6 +62,11 @@ public class AccountController {
         account.setStatus(1);
         accountService.createAccount(account);
         return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/products")
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
 
