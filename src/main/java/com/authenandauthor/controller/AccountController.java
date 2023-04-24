@@ -39,7 +39,7 @@ public class AccountController {
 
         String token = jwtService.createToken(authentication);
         Account account1 = accountService.findAccountByUsername(account.getUsername());
-        if (account.getStatus() == 2) {
+        if (account1.getStatus() == 2) {
             return null;
         } else {
             AccountToken accountToken = new AccountToken(account1.getId(), account1.getUsername(), token, account1.getRoles());
@@ -59,15 +59,7 @@ public class AccountController {
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
-    @PutMapping("/admin/block/{id}")
-    public ResponseEntity<?> blockAccount(@PathVariable int id) {
-        Account account = accountService.findAccountById(id);
-        if (account.getStatus() == 1) {
-            account.setStatus(2);
-        } else {
-            account.setStatus(1);
-        }
-        accountService.save(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
-    }
+
+
+
 }
